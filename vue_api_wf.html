@@ -39,8 +39,8 @@
 			</template>
 			<p>{{ currentCycles }}, Etat : </p>
 			<ul>
-				<li v-if="currentCycles=='Cetus Cycle'" class = "cetusCycle">
-					<a> {{currentCycles.cetusCycle.id }} </a>
+				<li v-if="currentCycles=='Cetus'" class = "cetusCycle">
+					<a> {{currentCycles.cetusCycle.active}} </a>
 				</li>
 				
 				<!-- <li v-for="record in commits"> -->
@@ -76,8 +76,8 @@
 			Vue.createApp({
 				data() {
 					return {
-						cycles: ["Cetus  Cycle", "Earth Cycle", "Cambion  Cycle", "Vallis  Cycle"],
-						currentCycles: "Cetus Cycle",
+						cycles: ["Cetus", "Earth", "Cambion", "Vallis"],
+						currentCycles: "Cetus",
 						commits: null,
 					};
 				},
