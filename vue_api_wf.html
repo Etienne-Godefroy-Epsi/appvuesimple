@@ -26,18 +26,18 @@
 	<body>
 		<div id="demo">
 			<!-- <pre>{{commits}}</pre> -->
-			<h1>Latest Vue.js Commits</h1>
-			<template v-for="branch in branches">
+			<h1>Actual Cycles</h1>
+			<template v-for="cycle in cycles">
 				<input
 					type="radio"
-					:id="branch"
-					:value="branch"
-					name="branch"
-					v-model="currentBranch"
+					:id="cycle"
+					:value="cycle"
+					name="cycle"
+					v-model="currentCycles"
 				/>
-				<label :for="branch">{{ branch }}</label>
+				<label :for="cycle">{{ cycle }}</label>
 			</template>
-			<p>vuejs/vue@{{ currentBranch }}</p>
+			<p>vuejs/vue@{{ currentCycles }}</p>
 			<ul>
 				<li v-for="record in commits">
 					<a :href="record.html_url" target="_blank" class="commit"
@@ -64,15 +64,16 @@
 		<script src="https://unpkg.com/vue@3"></script>
 		<script>
 			const apiURL =
-				"https://api.github.com/repos/vuejs/vue/commits?per_page=3&sha=";
+				"https://api.warframestat.us/";
+				<!-- "http://content.warframe.com/dynamic/worldState.php"; -->
 			const config = {
 			};
 
 			Vue.createApp({
 				data() {
 					return {
-						branches: ["main", "dev"],
-						currentBranch: "main",
+						cycles: ["Cetus  Cycle", "Earth Cycle", "Cambion  Cycle", "Vallis  Cycle"],
+						currentCycles: "Cetus Cycle",
 						commits: null,
 					};
 				},
@@ -83,13 +84,13 @@
 				},
 
 				watch: {
-					currentBranch: "fetchDataPromise", //fetchDataAsync
+					currentCycles: "fetchDataPromise", //fetchDataAsync
 				},
 				methods: {
 					fetchDataPromise: function () {
 						const self = this;
 						axios
-							.get(apiURL + self.currentBranch, config)
+							.get(apiURL + self.currentCycles, config)
 							.then(function (response) {
 								console.log(response.data);
 								self.commits = response.data;
@@ -101,7 +102,7 @@
 					},
 					// fetchDataAsync: async function () {
 					// 	try {
-					//   	const response = await axios.get(apiURL + this.currentBranch, config)
+					//   	const response = await axios.get(apiURL + this.currentCycles, config)
 					// 	  console.log(response.data)
 					// 	  this.commits = response.data
 					//         // console.log(self.commits[0].html_url);
