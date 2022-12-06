@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>commits-example</title>
+		<title>Warframe Cycles try</title>
 		<style>
 			#demo {
 				font-family: "Helvetica", Arial, sans-serif;
@@ -37,27 +37,31 @@
 				/>
 				<label :for="cycle">{{ cycle }}</label>
 			</template>
-			<p>vuejs/vue@{{ currentCycles }}</p>
+			<p>{{ currentCycles }}, Etat : </p>
 			<ul>
-				<li v-for="record in commits">
-					<a :href="record.html_url" target="_blank" class="commit"
-						>{{ record.sha.slice(0, 7) }}</a
-					>
-					-
-					<span class="message"
-						>{{ formattedMessage(record.commit.message) }}</span
-					><br />
-					by
-					<span class="author"
-						><a :href="record.author.html_url" target="_blank"
-							>{{ record.commit.author.name }}</a
-						></span
-					>
-					at
-					<span class="date"
-						>{{ formattedDate(record.commit.author.date) }}</span
-					>
+				<li v-if="currentCycles=='Cetus Cycle'" class = "cetusCycle">
+					<a> {{currentCycles.cetusCycle.id }} </a>
 				</li>
+				
+				<!-- <li v-for="record in commits"> -->
+					<!-- <a :href="record.html_url" target="_blank" class="commit" -->
+						<!-- >{{ record.sha.slice(0, 7) }}</a -->
+					<!-- > -->
+					<!-- - -->
+					<!-- <span class="message" -->
+						<!-- >{{ formattedMessage(record.commit.message) }}</span -->
+					<!-- ><br /> -->
+					<!-- by -->
+					<!-- <span class="author" -->
+						<!-- ><a :href="record.author.html_url" target="_blank" -->
+							<!-- >{{ record.commit.author.name }}</a -->
+						<!-- ></span -->
+					<!-- > -->
+					<!-- at -->
+					<!-- <span class="date" -->
+						<!-- >{{ formattedDate(record.commit.author.date) }}</span -->
+					<!-- > -->
+				<!-- </li> -->
 			</ul>
 		</div>
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
