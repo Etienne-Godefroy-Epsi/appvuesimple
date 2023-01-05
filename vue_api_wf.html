@@ -39,8 +39,8 @@
 			</template>
 			<p>{{ currentCycles }}, Etat : </p>
 			<ul>
-				<li v-if="currentCycles=='Cetus'" class = "cetusCycle">
-					<a> {{currentCycles.cetusCycle.active}} </a>
+				<li v-if="currentCycles.id" class = "cetusCycle">
+					<a> {{currentCycles.activation}} </a>
 				</li>
 				<!-- je crois j'ai un problème avec CORS mais j'ai pas compris ça allait trop vite -->
 				
@@ -68,17 +68,14 @@
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="https://unpkg.com/vue@3"></script>
 		<script>
-			const apiURL =
-				"https://api.warframestat.us/"; //je sais pas laquel utiliser
-				<!-- "http://content.warframe.com/dynamic/worldState.php"; -->
-			const config = {
-			};
+			const apiURL = "https://api.warframestat.us/pc/";
+			const config = {};
 
 			Vue.createApp({
 				data() {
 					return {
-						cycles: ["Cetus", "Earth", "Cambion", "Vallis"],
-						currentCycles: "Cetus",
+						cycles: ["cetusCycle", "earthCycle", "cambionCycle", "vallisCycle"],
+						currentCycles: "cetusCycle",
 						commits: null,
 					};
 				},
@@ -97,6 +94,7 @@
 						axios
 							.get(apiURL + self.currentCycles, config)
 							.then(function (response) {
+								console.log("retour API");
 								console.log(response.data);
 								self.commits = response.data;
 								// console.log(self.commits[0].html_url);
