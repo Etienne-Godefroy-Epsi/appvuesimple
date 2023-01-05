@@ -11,7 +11,7 @@
 			}
 			a {
 				text-decoration: none;
-				color: #f66;
+				color: #3535ff;
 			}
 			li {
 				line-height: 1.5em;
@@ -21,27 +21,33 @@
 			.date {
 				font-weight: bold;
 			}
+			.cetusCycle{
+				color: #000000;
+			
+			}
 		</style>
 	</head>
 	<body>
 		<div id="demo">
 			<!-- <pre>{{commits}}</pre> -->
 			<h1>Actual Cycles</h1>
-			<template v-for="cycle in cycles">
+			<template v-for="place in places">
 				<input
 					type="radio"
-					:id="cycle"
-					:value="cycle"
-					name="cycle"
-					v-model="currentCycles"
+					:id="place"
+					:value="place"
+					name="place"
+					v-model="currentPlace"
 				/>
-				<label :for="cycle">{{ cycle }}</label>
+				<label :for="place">{{ place }}</label>
 			</template>
-			<p>{{ currentCycles }}, Etat : </p>
+			<p>{{ currentPlace }}, Etat : </p>
 			<ul>
-				<li v-if="wf_info.id" class = "cetusCycle">
-					<a> {{wf_info.activation}} </a>
-				</li>
+				<div v-if="wf_info !== null">
+					<li v-if="wf_info.id" class = "cetusCycle">
+						<a> {{wf_info.activation}} </a>
+					</li>
+				</div>
 				<!-- je crois j'ai un problème avec CORS mais j'ai pas compris ça allait trop vite -->
 				
 				<!-- <li v-for="record in commits"> -->
@@ -74,8 +80,8 @@
 			Vue.createApp({
 				data() {
 					return {
-						cycles: ["cetusCycle", "earthCycle", "cambionCycle", "vallisCycle"],
-						currentCycles: "cetusCycle",
+						places: ["cetus", "earth", "cambion", "vallis"],
+						currentPlace: "cetus",
 						wf_info: null,
 					};
 				},
@@ -86,13 +92,13 @@
 				},
 
 				watch: {
-					currentCycles: "fetchDataPromise", //fetchDataAsync
+					currentPlace: "fetchDataPromise", //fetchDataAsync
 				},
 				methods: {
 					fetchDataPromise: function () {
 						const self = this;
 						axios
-							.get(apiURL + self.currentCycles, config)
+							.get(apiURL + self.currentPlace + "Cycle", config)
 							.then(function (response) {
 								console.log("retour API");
 								console.log(response.data);
@@ -105,7 +111,7 @@
 					},
 					// fetchDataAsync: async function () {
 					// 	try {
-					//   	const response = await axios.get(apiURL + this.currentCycles, config)
+					//   	const response = await axios.get(apiURL + this.currentPlace, config)
 					// 	  console.log(response.data)
 					// 	  this.commits = response.data
 					//         // console.log(self.commits[0].html_url);
