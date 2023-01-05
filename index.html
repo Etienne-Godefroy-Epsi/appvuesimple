@@ -39,8 +39,8 @@
 			</template>
 			<p>{{ currentCycles }}, Etat : </p>
 			<ul>
-				<li v-if="currentCycles.id" class = "cetusCycle">
-					<a> {{currentCycles.activation}} </a>
+				<li v-if="wf_info.id" class = "cetusCycle">
+					<a> {{wf_info.activation}} </a>
 				</li>
 				<!-- je crois j'ai un problème avec CORS mais j'ai pas compris ça allait trop vite -->
 				
@@ -76,7 +76,7 @@
 					return {
 						cycles: ["cetusCycle", "earthCycle", "cambionCycle", "vallisCycle"],
 						currentCycles: "cetusCycle",
-						commits: null,
+						wf_info: null,
 					};
 				},
 
@@ -96,7 +96,7 @@
 							.then(function (response) {
 								console.log("retour API");
 								console.log(response.data);
-								self.commits = response.data;
+								self.wf_info = response.data;
 								// console.log(self.commits[0].html_url);
 							})
 							.catch(function (error) {
