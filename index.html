@@ -14,6 +14,7 @@
 				color: #3535ff;
 			}
 			li {
+				text-decoration: none;
 				line-height: 1.5em;
 				margin-bottom: 20px;
 			}
@@ -21,8 +22,8 @@
 			.date {
 				font-weight: bold;
 			}
-			.cetusCycle{
-				color: #000000;
+			.infoType{
+				color: #451010;
 			
 			}
 		</style>
@@ -41,36 +42,44 @@
 				/>
 				<label :for="place">{{ place }}</label>
 			</template>
-			<p>{{ currentPlace }}, Etat : </p>
+			<!-- <p>{{ currentPlace }}: </p> -->
+			<p> {{currentPlace[0].toUpperCase() + currentPlace.slice(1)}} </p>
 			<ul>
 				<div v-if="wf_info !== null">
-					<li v-if="wf_info.id" class = "cetusCycle">
-						<a> {{wf_info.activation}} </a>
-					</li>
-				</div>
-				<!-- je crois j'ai un problème avec CORS mais j'ai pas compris ça allait trop vite -->
 				
-				<!-- <li v-for="record in commits"> -->
-					<!-- <a :href="record.html_url" target="_blank" class="commit" -->
-						<!-- >{{ record.sha.slice(0, 7) }}</a -->
-					<!-- > -->
-					<!-- - -->
-					<!-- <span class="message" -->
-						<!-- >{{ formattedMessage(record.commit.message) }}</span -->
-					<!-- ><br /> -->
-					<!-- by -->
-					<!-- <span class="author" -->
-						<!-- ><a :href="record.author.html_url" target="_blank" -->
-							<!-- >{{ record.commit.author.name }}</a -->
-						<!-- ></span -->
-					<!-- > -->
-					<!-- at -->
-					<!-- <span class="date" -->
-						<!-- >{{ formattedDate(record.commit.author.date) }}</span -->
-					<!-- > -->
-				<!-- </li> -->
+					<li v-if="wf_info.id" class = "infoType">
+						Current world state : <a> {{wf_info.state}} </a>
+					</li>
+					
+					<li v-if="wf_info.id" class = "infoType">
+						Time left until next state : <a> {{wf_info.timeLeft}} </a>
+					</li>
+					
+					<li v-if="wf_info.state == 'fass'" class = "infoType">
+						Next world state : <a> vome </a>
+					</li>
+					<li v-if="wf_info.state == 'vome'" class = "infoType">
+						Next world state : <a> fass </a>
+					</li>
+					<li v-if="wf_info.state == 'day'" class = "infoType">
+						Next world state : <a> night </a>
+					</li>
+					<li v-if="wf_info.state == 'night'" class = "infoType">
+						Next world state : <a> day </a>
+					</li>
+					<li v-if="wf_info.state == 'cold'" class = "infoType">
+						Next world state : <a> warm </a>
+					</li>
+					<li v-if="wf_info.state == 'warm'" class = "infoType">
+						Next world state : <a> cold </a>
+					</li>
+					
+					
+				</div>
 			</ul>
 		</div>
+		
+		
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 		<script src="https://unpkg.com/vue@3"></script>
 		<script>
@@ -88,11 +97,10 @@
 
 				created: function () {
 					this.fetchDataPromise();
-					// this.fetchDataAsync()
 				},
 
 				watch: {
-					currentPlace: "fetchDataPromise", //fetchDataAsync
+					currentPlace: "fetchDataPromise", 
 				},
 				methods: {
 					fetchDataPromise: function () {
@@ -103,22 +111,11 @@
 								console.log("retour API");
 								console.log(response.data);
 								self.wf_info = response.data;
-								// console.log(self.commits[0].html_url);
 							})
 							.catch(function (error) {
 								console.log(error);
 							});
 					},
-					// fetchDataAsync: async function () {
-					// 	try {
-					//   	const response = await axios.get(apiURL + this.currentPlace, config)
-					// 	  console.log(response.data)
-					// 	  this.commits = response.data
-					//         // console.log(self.commits[0].html_url);
-					//   } catch(error) {
-					//     console.log(error);
-					//   }
-					// },
 					formattedMessage: function (message) {
 						const newline = message.indexOf("\n");
 						return newline > 0 ? message.slice(0, newline) : message;
